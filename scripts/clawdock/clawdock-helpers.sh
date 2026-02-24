@@ -277,7 +277,12 @@ clawdock-config() {
 # Container Access
 clawdock-shell() {
   _clawdock_compose exec openclaw-gateway \
-    bash -c 'echo "alias openclaw=\"./openclaw.mjs\"" > /tmp/.bashrc_openclaw && bash --rcfile /tmp/.bashrc_openclaw'
+    bash -c 'cat > /tmp/.bashrc_openclaw <<'"'"'RCEOF'"'"'
+alias openclaw="./openclaw.mjs"
+export CLAWHUB_WORKDIR=/home/node/.openclaw/workspace
+export CLAWHUB_CONFIG_PATH=/home/node/.openclaw/.clawhub-config.json
+RCEOF
+bash --rcfile /tmp/.bashrc_openclaw'
 }
 
 clawdock-exec() {

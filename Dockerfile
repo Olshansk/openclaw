@@ -49,6 +49,12 @@ RUN pnpm build
 ENV OPENCLAW_PREFER_PNPM=1
 RUN pnpm ui:build
 
+# Install ClawHub CLI for skill management (search, install, update, publish).
+# Skills persist on the workspace volume via CLAWHUB_WORKDIR.
+USER root
+RUN npm i -g clawhub
+USER node
+
 ENV NODE_ENV=production
 
 # Security hardening: Run as non-root user
